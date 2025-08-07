@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Button Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .real-button {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        
+        .real-button:hover {
+            background: #2563eb;
+        }
+        
+        .real-button:focus,
+        .real-link:focus {
+            outline: 3px solid #f59e0b;
+            outline-offset: 2px;
+        }
+        
+        .real-link {
+            display: inline-block;
+            margin: 1rem 0;
+            color: #2563eb;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        
+        .real-link:hover {
+            color: #1d4ed8;
+        }
+        
+        .real-link.clicked {
+            color: #16a34a;
+        }
+        
+        .real-button:active,
+        .real-button.clicked {
+            background: #16a34a;
+            transform: scale(0.95);
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+        }
+        
+        .instructions {
+            text-align: center;
+            color: #6b7280;
+            max-width: 400px;
+        }
+        
+        .success-info {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        .keyboard-tips {
+            background: #e0f2fe;
+            color: #0c4a6e;
+            border: 2px solid #0ea5e9;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <p><strong>Try these with keyboard and mouse</strong></p>
+        <p><em>Tab to navigate, Enter/Space to activate, Ctrl+Click to open link in new tab</em></p>
+    </div>
+    
+    <!-- This is a proper HTML button element -->
+    <button class="real-button" onclick="buttonClicked()">
+        Click Me!
+    </button>
+    
+    <!-- This is a real HTML link element -->
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="real-link" onclick="linkClicked(event)" target="_blank">
+        🔗 Visit Our Homepage
+    </a>
+    
+    <div id="message" class="message">
+        Click the button or link to see this message change
+    </div>
+    
+    <div class="keyboard-tips">
+        <strong>🎯 Notice the differences:</strong><br>
+        • You can Tab to reach both elements<br>
+        • Clear focus indicators (yellow outline)<br>
+        • Button works with Enter and Space<br>
+        • Link works with Enter<br>
+        • Ctrl+Click and right-click work on the link
+    </div>
+    
+    <div class="success-info">
+        <strong>✅ This works because they're semantic HTML elements!</strong><br>
+        Real &lt;button&gt; and &lt;a&gt; elements get all the accessibility behavior for free.
+    </div>
+
+    <script>
+        function buttonClicked() {
+            const button = document.querySelector('.real-button');
+            const message = document.getElementById('message');
+            
+            button.classList.add('clicked');
+            button.textContent = '✓ Clicked!';
+            
+            message.className = 'message success';
+            message.textContent = '🎉 Perfect! You used proper keyboard navigation.';
+            
+            setTimeout(() => {
+                button.classList.remove('clicked');
+                button.textContent = 'Click Me!';
+                message.className = 'message';
+                message.textContent = 'Click the button or link to see this message change';
+            }, 3000);
+        }
+        
+        function linkClicked(event) {
+            // Only show the demo message if it's a regular click (not Ctrl+click)
+            if (!event.ctrlKey && !event.metaKey) {
+                // Prevent default for demo message, but allow Ctrl+click to work
+                event.preventDefault();
+                
+                const link = document.querySelector('.real-link');
+                const message = document.getElementById('message');
+                
+                link.classList.add('clicked');
+                link.textContent = '✓ Link Clicked!';
+                
+                message.className = 'message success';
+                message.textContent = '🎉 Perfect! Try Ctrl+Click to open in new tab, or right-click for context menu!';
+                
+                setTimeout(() => {
+                    link.classList.remove('clicked');
+                    link.textContent = '🔗 Visit Our Homepage';
+                    message.className = 'message';
+                    message.textContent = 'Click the button or link to see this message change';
+                }, 3000);
+            }
+            // If Ctrl+click (or Cmd+click on Mac), let it work normally - link will open in new tab
+        }
+    </script>
+</body>
+</html>

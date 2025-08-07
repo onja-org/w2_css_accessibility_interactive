@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Button Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 2rem;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .fake-button {
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            /* This looks like a button but... */
+        }
+        
+        .fake-button:hover {
+            background: #2563eb;
+        }
+        
+        .fake-button.clicked {
+            background: #16a34a;
+            transform: scale(0.95);
+        }
+        
+        .fake-link {
+            color: #2563eb;
+            text-decoration: underline;
+            cursor: pointer;
+            margin: 1rem 0;
+            transition: color 0.2s;
+            display: inline-block;
+        }
+        
+        .fake-link:hover {
+            color: #1d4ed8;
+        }
+        
+        .fake-link.clicked {
+            color: #16a34a;
+        }
+        
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+        }
+        
+        .instructions {
+            text-align: center;
+            color: #6b7280;
+            max-width: 400px;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <p><strong>Try these with keyboard only:</strong></p>
+        <p><em>Tab to navigate, Enter to activate, Ctrl+Click to open link in new tab</em></p>
+    </div>
+    
+    <!-- This is the problematic "button" - it's actually a div -->
+    <div class="fake-button" onclick="buttonClicked()">
+        Click Me!
+    </div>
+    
+    <!-- This looks like a link but isn't accessible either -->
+    <div class="fake-link" onclick="linkClicked()">
+        🔗 Visit Our Homepage
+    </div>
+    
+    <div id="message" class="message">
+        Click the button or link to see this message change
+    </div>
+    
+    <div class="warning">
+        <strong>⚠️ Notice the problems:</strong><br>
+        • Can't Tab to either element<br>
+        • Can't Ctrl+Click the "link" to open in new tab<br>
+        • No right-click context menu<br>
+        • Screen readers don't recognize them as interactive
+    </div>
+
+    <script>
+        function buttonClicked() {
+            const button = document.querySelector('.fake-button');
+            const message = document.getElementById('message');
+            
+            button.classList.add('clicked');
+            button.textContent = '✓ Clicked!';
+            
+            message.className = 'message success';
+            message.textContent = '🎉 Success! You clicked the button.';
+            
+            setTimeout(() => {
+                button.classList.remove('clicked');
+                button.textContent = 'Click Me!';
+                message.className = 'message';
+                message.textContent = 'Click the button or link to see this message change';
+            }, 3000);
+        }
+        
+        function linkClicked() {
+            const link = document.querySelector('.fake-link');
+            const message = document.getElementById('message');
+            
+            link.classList.add('clicked');
+            link.textContent = '✓ "Link" Clicked!';
+            
+            message.className = 'message success';
+            message.textContent = '🎉 You clicked the fake link (but notice: no new tab opened!)';
+            
+            setTimeout(() => {
+                link.classList.remove('clicked');
+                link.textContent = '🔗 Visit Our Homepage';
+                message.className = 'message';
+                message.textContent = 'Click the button or link to see this message change';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Focus Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            max-width: 400px;
+        }
+        
+        h3 {
+            margin-top: 0;
+            color: #374151;
+            font-size: 1.1em;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.9em;
+            background: white;
+        }
+        
+        /* THE PROBLEM: Focus indicators are completely invisible */
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        select:focus,
+        textarea:focus,
+        button:focus {
+            outline: none !important; /* This breaks accessibility */
+            box-shadow: none !important; /* Remove any focus shadows */
+            border-color: #d1d5db; /* Keep same color as unfocused */
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        textarea {
+            resize: vertical;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Contact Form</h3>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 1rem;">
+        <strong>Tab through this form</strong> - can you tell which field you're on?
+    </p>
+    
+    <form>
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name">
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email">
+        </div>
+        
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="">Select a country</option>
+                <option value="us">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="ca">Canada</option>
+                <option value="mg">Madagascar</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message here..."></textarea>
+        </div>
+        
+        <button type="submit">Send Message</button>
+    </form>
+    
+    <div class="warning">
+        <strong>⚠️ Lost?</strong> There's no visible indication of which field has focus!<br>
+        This CSS removes the outline: <code>outline: none;</code>
+    </div>
+</body>
+</html>

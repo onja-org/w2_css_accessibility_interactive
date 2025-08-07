@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Tab Order Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            max-width: 400px;
+        }
+        
+        h3 {
+            margin-top: 0;
+            color: #374151;
+            font-size: 1.1em;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.9em;
+            background: white;
+        }
+        
+        input:focus,
+        select:focus,
+        button:focus {
+            outline: 3px solid #f59e0b;
+            outline-offset: 2px;
+            border-color: #3b82f6;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.25rem;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        .button-row {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 2px solid #f59e0b;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .step-indicator {
+            position: absolute;
+            top: -25px;
+            right: 5px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        /* THE PROBLEM: Broken tabindex values */
+    </style>
+</head>
+<body>
+    <h3>Order Form</h3>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 1rem;">
+        <strong>Tab through this form</strong> - notice how focus jumps around randomly!
+    </p>
+    
+    <form>
+        <!-- These tabindex values create chaos -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input type="text" id="first-name" tabindex="7">
+                <div class="step-indicator">7</div>
+            </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" id="last-name" tabindex="2">
+                <div class="step-indicator">2</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email-broken">Email</label>
+            <input type="email" id="email-broken" tabindex="15">
+            <div class="step-indicator">15</div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" tabindex="3">
+                <div class="step-indicator">3</div>
+            </div>
+            <div class="form-group">
+                <label for="country-broken">Country</label>
+                <select id="country-broken" tabindex="1">
+                    <option value="">Select...</option>
+                    <option value="us">USA</option>
+                    <option value="mg">Madagascar</option>
+                </select>
+                <div class="step-indicator">1</div>
+            </div>
+        </div>
+        
+        <div class="button-row">
+            <button type="button" tabindex="5">Clear</button>
+            <button type="submit" tabindex="12">Submit Order</button>
+        </div>
+    </form>
+    
+    <div class="warning">
+        <strong>😵‍💫 Confusing, right?</strong><br>
+        Manual tabindex values (1, 2, 3, 5, 7, 12, 15) disrupt the natural flow.<br>
+        Users expect to tab through forms in visual order!
+    </div>
+
+    <script>
+        // Show step numbers when elements receive focus
+        document.addEventListener('focusin', function(e) {
+            if (e.target.matches('input, select, button')) {
+                const indicator = e.target.parentNode.querySelector('.step-indicator');
+                if (indicator) {
+                    indicator.style.opacity = '1';
+                }
+            }
+        });
+        
+        document.addEventListener('focusout', function(e) {
+            if (e.target.matches('input, select, button')) {
+                const indicator = e.target.parentNode.querySelector('.step-indicator');
+                if (indicator) {
+                    indicator.style.opacity = '0';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

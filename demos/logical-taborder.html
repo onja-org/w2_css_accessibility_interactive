@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logical Tab Order Demo</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 1.5rem;
+            background-color: #f9fafb;
+            max-width: 400px;
+        }
+        
+        h3 {
+            margin-top: 0;
+            color: #374151;
+            font-size: 1.1em;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            flex: 1;
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 0.9em;
+            background: white;
+        }
+        
+        input:focus,
+        select:focus,
+        button:focus {
+            outline: 3px solid #f59e0b;
+            outline-offset: 2px;
+            border-color: #3b82f6;
+        }
+        
+        button {
+            background: #3b82f6;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 0.25rem;
+        }
+        
+        button:hover {
+            background: #2563eb;
+        }
+        
+        .button-row {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #22c55e;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .step-indicator {
+            position: absolute;
+            top: -25px;
+            right: 5px;
+            background: #22c55e;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8em;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .form-group {
+            position: relative;
+        }
+        
+        /* THE SOLUTION: Natural tab order (no manual tabindex) */
+    </style>
+</head>
+<body>
+    <h3>Order Form</h3>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 1rem;">
+        <strong>Tab through this form</strong> - notice the logical, predictable flow!
+    </p>
+    
+    <form>
+        <!-- Natural document order = logical tab order -->
+        <div class="form-row">
+            <div class="form-group">
+                <label for="first-name-good">First Name</label>
+                <input type="text" id="first-name-good">
+                <div class="step-indicator">1</div>
+            </div>
+            <div class="form-group">
+                <label for="last-name-good">Last Name</label>
+                <input type="text" id="last-name-good">
+                <div class="step-indicator">2</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="email-good">Email</label>
+            <input type="email" id="email-good">
+            <div class="step-indicator">3</div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="phone-good">Phone</label>
+                <input type="tel" id="phone-good">
+                <div class="step-indicator">4</div>
+            </div>
+            <div class="form-group">
+                <label for="country-good">Country</label>
+                <select id="country-good">
+                    <option value="">Select...</option>
+                    <option value="us">USA</option>
+                    <option value="mg">Madagascar</option>
+                </select>
+                <div class="step-indicator">5</div>
+            </div>
+        </div>
+        
+        <div class="button-row">
+            <button type="button">Clear</button>
+            <button type="submit">Submit Order</button>
+        </div>
+    </form>
+    
+    <div class="success">
+        <strong>✅ Smooth and predictable!</strong><br>
+        No manual tabindex values - elements follow their natural document order.<br>
+        This matches users' visual expectations perfectly.
+    </div>
+
+    <script>
+        // Show step numbers when elements receive focus
+        let stepCounter = 0;
+        const elements = document.querySelectorAll('input, select, button');
+        
+        document.addEventListener('focusin', function(e) {
+            if (e.target.matches('input, select, button')) {
+                const indicator = e.target.parentNode.querySelector('.step-indicator');
+                if (indicator) {
+                    indicator.style.opacity = '1';
+                }
+            }
+        });
+        
+        document.addEventListener('focusout', function(e) {
+            if (e.target.matches('input, select, button')) {
+                const indicator = e.target.parentNode.querySelector('.step-indicator');
+                if (indicator) {
+                    indicator.style.opacity = '0';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

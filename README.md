@@ -42,19 +42,6 @@ This lab uses **interactive demonstrations** to help you experience accessibilit
 2. **Focus Indicators** - Navigate "blind" vs with clear visual indicators
 3. **Tab Order Chaos** - Experience unpredictable navigation vs logical flow
 
-### Navigation Tips:
-- **Main page navigation** - Use the blue navigation bar to jump between sections
-- **Within demos** - Tab into each iframe to interact with the examples
-- **Comparison** - Side-by-side demos let you immediately compare broken vs accessible versions
-
-## 🔍 What to Pay Attention To
-
-As you go through each demo, notice:
-- **Which elements can you reach with Tab?**
-- **Can you tell where you are when navigating?**
-- **Does the navigation flow match your expectations?**
-- **How would this feel if you relied on keyboard navigation daily?**
-
 ## 💡 Key Concepts
 
 - **Semantic HTML** - Using proper elements (`<button>` not `<div>`)
@@ -62,18 +49,6 @@ As you go through each demo, notice:
 - **Logical Tab Order** - Navigation that follows visual layout
 - **User Empathy** - Understanding real impact on people's lives
 
-## 🎓 After This Lab
-
-Apply these principles to your own projects:
-1. **Test with keyboard only** - If you can't use it with Tab/Enter, neither can many users
-2. **Use semantic HTML elements** - They come with accessibility features built-in  
-3. **Make focus visible** - Don't remove outlines without providing alternatives
-4. **Keep tab order logical** - Avoid manual tabindex unless absolutely necessary
-
 ## 🌟 Remember
 
 Accessibility isn't a nice-to-have feature - it's a fundamental requirement for inclusive web development. Every user deserves to access and interact with your content.
-
----
-
-**Questions or issues?** Feel free to ask for help during lab time!

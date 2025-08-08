@@ -51,4 +51,4 @@ This lab uses **interactive demonstrations** to help you experience accessibilit
 
 ## 🌟 Remember
 
-Accessibility isn't a nice-to-have feature - it's a fundamental requirement for inclusive web development. Every user deserves to access and interact with your content.
+Every user deserves to access and interact with your content.
